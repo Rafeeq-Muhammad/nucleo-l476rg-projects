@@ -1,0 +1,9 @@
+7seg-functions.c:36:13:gpioSetReset	8	static
+7seg-functions.c:41:6:clearDisplay	8	static
+7seg-functions.c:46:6:moveCursor	16	static
+7seg-functions.c:54:6:writeToDigit	16	static
+7seg-functions.c:62:6:writeToDisplay	32	static
+7seg-functions.c:83:6:setBrightness	24	static
+7seg-functions.c:89:6:writeTest	24	static
+7seg-functions.c:109:6:initializeDisplay	8	static
+7seg-functions.c:117:6:startCounter	24	static

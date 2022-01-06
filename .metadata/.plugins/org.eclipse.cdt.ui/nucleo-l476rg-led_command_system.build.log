@@ -1,0 +1,10 @@
+17:46:00 **** Incremental Build of configuration Debug for project nucleo-l476rg-led_command_system ****
+make -j8 all 
+arm-none-eabi-size   nucleo-l476rg-led_command_system.elf 
+   text	   data	    bss	    dec	    hex	filename
+  22152	    120	   1944	  24216	   5e98	nucleo-l476rg-led_command_system.elf
+Finished building: default.size.stdout
+ 
+
+17:46:00 Build Finished. 0 errors, 0 warnings. (took 259ms)
+

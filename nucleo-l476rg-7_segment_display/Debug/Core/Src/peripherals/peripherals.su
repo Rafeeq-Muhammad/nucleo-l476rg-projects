@@ -1,0 +1,6 @@
+peripherals.c:22:6:SystemClock_Config	96	static
+peripherals.c:70:6:MX_I2C1_Init	8	static
+peripherals.c:111:6:MX_SPI1_Init	8	static
+peripherals.c:151:6:MX_USART2_UART_Init	8	static
+peripherals.c:186:6:MX_GPIO_Init	48	static
+peripherals.c:218:6:Error_Handler	4	static,ignoring_inline_asm

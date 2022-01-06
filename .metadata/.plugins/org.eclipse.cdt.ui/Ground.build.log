@@ -1,0 +1,86 @@
+20:24:51 **** Incremental Build of configuration Debug for project Ground ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/LoRa.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/LoRa.d" -MT"Core/Src/LoRa.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/LoRa.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32l4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l4xx_hal_msp.d" -MT"Core/Src/stm32l4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32l4xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l4xx_it.d" -MT"Core/Src/stm32l4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32l4xx_it.o"
+arm-none-eabi-gcc "../Core/Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/syscalls.d" -MT"Core/Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/syscalls.o"
+arm-none-eabi-gcc "../Core/Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/sysmem.d" -MT"Core/Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/sysmem.o"
+arm-none-eabi-gcc "../Core/Src/system_stm32l4xx.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/system_stm32l4xx.d" -MT"Core/Src/system_stm32l4xx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/system_stm32l4xx.o"
+In file included from ../Core/Src/LoRa.c:1:
+../Core/Src/LoRa.h:1:1: warning: multi-line comment [-Wcomment]
+    1 | // -------------------------------------------------- \\
+      | ^
+In file included from ../Core/Src/main.c:78:
+../Core/Src/LoRa.h:1:1: warning: multi-line comment [-Wcomment]
+    1 | // -------------------------------------------------- \\
+      | ^
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:407:13: error: invalid storage class for function 'MX_SPI1_Init'
+  407 | static void MX_SPI1_Init(void)
+      |             ^~~~~~~~~~~~
+../Core/Src/main.c:447:13: error: invalid storage class for function 'MX_USART2_UART_Init'
+  447 | static void MX_USART2_UART_Init(void)
+      |             ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:482:13: error: invalid storage class for function 'MX_GPIO_Init'
+  482 | static void MX_GPIO_Init(void)
+      |             ^~~~~~~~~~~~
+../Core/Src/main.c: In function 'HAL_GPIO_EXTI_Callback':
+../Core/Src/main.c:601:5: warning: 'memset' used with length equal to number of elements without multiplication by element size [-Wmemset-elt-size]
+  601 |     memset(received_data,0,128); //Copies 0 to all 30 cells of my received_data buffer.
+      |     ^~~~~~
+../Core/Src/main.c:603:41: warning: passing argument 2 of 'LoRa_receive' from incompatible pointer type [-Wincompatible-pointer-types]
+  603 |     packet_size = LoRa_receive(&myLoRa, received_data, 30);
+      |                                         ^~~~~~~~~~~~~
+      |                                         |
+      |                                         char **
+In file included from ../Core/Src/main.c:78:
+../Core/Src/LoRa.h:125:44: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char **'
+  125 | uint8_t LoRa_receive(LoRa* _LoRa, uint8_t* data, uint8_t length);
+      |                                   ~~~~~~~~~^~~~
+../Core/Src/main.c:608:74: warning: format '%s' expects argument of type 'char *', but argument 4 has type 'char **' [-Wformat=]
+  608 |     snprintf((char*)local_message,sizeof(local_message),"Received data: %s\n\r", received_data);
+      |                                                                         ~^       ~~~~~~~~~~~~~
+      |                                                                          |       |
+      |                                                                          char *  char **
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:634:1: error: expected declaration or statement at end of input
+  634 | }
+      | ^
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:106:13: warning: 'MX_GPIO_Init' used but never defined
+  106 | static void MX_GPIO_Init(void);
+      |             ^~~~~~~~~~~~
+../Core/Src/main.c:107:13: warning: 'MX_USART2_UART_Init' used but never defined
+  107 | static void MX_USART2_UART_Init(void);
+      |             ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:108:13: warning: 'MX_SPI1_Init' used but never defined
+  108 | static void MX_SPI1_Init(void);
+      |             ^~~~~~~~~~~~
+../Core/Src/main.c:625:6: warning: 'Error_Handler' defined but not used [-Wunused-function]
+  625 | void Error_Handler(void)
+      |      ^~~~~~~~~~~~~
+../Core/Src/main.c:595:6: warning: 'HAL_GPIO_EXTI_Callback' defined but not used [-Wunused-function]
+  595 | void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+      |      ^~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:521:6: warning: 'HAL_UART_RxCpltCallback' defined but not used [-Wunused-function]
+  521 | void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+      |      ^~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:482:13: warning: 'MX_GPIO_Init' defined but not used [-Wunused-function]
+  482 | static void MX_GPIO_Init(void)
+      |             ^~~~~~~~~~~~
+../Core/Src/main.c:447:13: warning: 'MX_USART2_UART_Init' defined but not used [-Wunused-function]
+  447 | static void MX_USART2_UART_Init(void)
+      |             ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:407:13: warning: 'MX_SPI1_Init' defined but not used [-Wunused-function]
+  407 | static void MX_SPI1_Init(void)
+      |             ^~~~~~~~~~~~
+../Core/Src/main.c:359:6: warning: 'SystemClock_Config' defined but not used [-Wunused-function]
+  359 | void SystemClock_Config(void)
+      |      ^~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:37: Core/Src/main.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+
+20:24:52 Build Failed. 6 errors, 15 warnings. (took 862ms)
+

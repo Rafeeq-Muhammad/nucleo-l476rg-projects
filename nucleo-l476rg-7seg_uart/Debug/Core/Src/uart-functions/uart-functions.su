@@ -1,0 +1,9 @@
+uart-functions.c:56:6:Transmit	16	static
+uart-functions.c:67:6:cleanTransmit	520	static
+uart-functions.c:80:6:cleanTransmitWithIcon	528	static
+uart-functions.c:93:6:HAL_UART_RxCpltCallback	16	static
+uart-functions.c:152:6:initializeCLI	112	static
+uart-functions.c:169:6:newlineCLI	112	static
+uart-functions.c:182:6:unrecognizedCommand	112	static
+uart-functions.c:195:6:commandComplete	8	static
+uart-functions.c:209:6:processCommands	8	static

@@ -1,0 +1,10 @@
+11:27:06 **** Incremental Build of configuration Debug for project nucleo-l476rg-fix_inga_remote ****
+make -j8 all 
+arm-none-eabi-size   nucleo-l476rg-fix_inga_remote.elf 
+   text	   data	    bss	    dec	    hex	filename
+  21120	    120	   1992	  23232	   5ac0	nucleo-l476rg-fix_inga_remote.elf
+Finished building: default.size.stdout
+ 
+
+11:27:06 Build Finished. 0 errors, 0 warnings. (took 359ms)
+

@@ -1,0 +1,68 @@
+/* I'm using the term "digit place" to refer to the location where some character can be represented.
+	 *
+	 * **NOTICE**
+	 *
+	 * So, according to the datasheet we will need to pass with one bit of data or two bits of data
+	 * depending on the command we wish to transmit through SPI. As you can see later on in the actual
+	 * code you'll notice a few things:
+	 *
+	    //move cursor to first position 0x00
+	    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+	    HAL_SPI_Transmit(&hspi1, digit1_cmd, 2, timeout);
+	    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+	    //write to display "T"
+	    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+	    HAL_SPI_Transmit(&hspi1, &data_buff_1, 1, timeout);
+	    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+
+
+	  * The SPI transmit has the following syntax: HAL_SPI_Transmit(object address to SPI, data to be transfered, how many bits we are transferring, timeout)
+	  * To move the cursor we need to pass 2 bits of data, that is according to the data sheet  {0x79, 0x00}. We cannot just simply
+	  * do two HAL SPI Transmit with one transmitting 0x79 and then another one 0x00. We must make an array that carries both bits of data
+	  * as defined above. Otherwise the command will not work.
+	  *
+	  * The reason why we send 1 bit of data to write to the display is because once we indicated what cursor we wanted to be on,
+	  * all we have to do is fill its register with some information, in this example its "T". so we pass the address of the data buffer
+	  * that contains that character.
+	  *
+	  * TDLR and simplest terms:
+	  *
+	  * To send two bytes of data to execute some command according to the data sheet for this display device:
+	  * *****YES********
+	    //move cursor to first position 0x00
+	    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+	    HAL_SPI_Transmit(&hspi1, digit1_cmd, 2, timeout);
+	    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+	  * This will work to move cursor
+	  *
+	  * *****NO********
+	    //move cursor to first position 0x00
+	    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+	    HAL_SPI_Transmit(&hspi1, 0x79, 2, timeout);
+	    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+	    //write to display "T"
+	    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+	    HAL_SPI_Transmit(&hspi1, 0x00, 1, timeout);
+	    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+	  * This will not work to move cursor.
+	 */
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+  	  //-Tasks START-//
+  /*
+   * The way transmission works is I reset the signal to the gpiob making it 0,
+   * then I load the information, then i set the signal again to display the signal.
+   * The problem is that everytime I set the signal, the cursor moves automatically.
+   *
+   * SO I HAVE ONE OPTIONS.
+   *
+   * ONE: Everytime right befor I transmit I manually send the cursor back to the
+   * cursor I'm on with the 3 lines I have (DO THIS).
+  */
+  	  //-Tasks END-//

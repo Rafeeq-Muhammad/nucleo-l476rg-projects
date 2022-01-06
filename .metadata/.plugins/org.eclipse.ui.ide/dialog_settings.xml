@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="ExternalProjectImportWizard">
+		<item key="WizardProjectsImportPage.STORE_NESTED_PROJECTS" value="true"/>
+	</section>
+	<section name="SmartImportWizard">
+		<item key="SmartImportRootWizardPage.STORE_HIDE_ALREADY_OPEN" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_CLOSE_IMPORTED" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
+		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
+		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\rafee\OneDrive\University\CAPE\STM\STM32 Projects\Final_Project\Ground"/>
+			<item value="C:\Users\rafee\OneDrive\University\CAPE\STM\Rizwan Project\11.19.21"/>
+			<item value="C:\Users\rafee\Desktop\2021-final-project\Ground"/>
+			<item value="C:\Users\rafee\Desktop\2021-final-project"/>
+			<item value="C:\Users\rafee\STM32CubeIDE\workspace_1.7.0\nucleo-l476rg-7_segment_display"/>
+			<item value="C:\Users\rafee\Desktop\nucleo-l476rg-7_segment_display"/>
+			<item value="C:\Users\rafee\Desktop\temp"/>
+			<item value="C:\Users\rafee\STM32CubeIDE\workspace_1.7.0\nucleo-l476rg-uart_counter_interrupt"/>
+			<item value="C:\Users\rafee\Desktop\lorareceive"/>
+			<item value="C:\Users\rafee\Desktop\CAPECubesat-2021-final-project-5e13f860ce34\CAPECubesat-2021-final-project-5e13f860ce34"/>
+			<item value="C:\Users\rafee\STM32CubeIDE\workspace_1.7.0\nucleo-l476rg-buffer-testing"/>
+			<item value="C:\Users\rafee\Desktop\Final_Project\Final_Project\Ground"/>
+			<item value="C:\Users\rafee\Desktop\TempGround\TempGround"/>
+			<item value="C:\Users\rafee\Desktop\TempGround"/>
+			<item value="C:\Users\rafee\Desktop\WorkingFinal\master\GroundNode"/>
+			<item value="C:\Users\rafee\Desktop\FinalProject\2021-final-project\GroundNode"/>
+			<item value="C:\Users\rafee\Desktop\FinalProject"/>
+			<item value="C:\Users\rafee\OneDrive\University\CAPE\STM\STM32 Projects\josephs_pipesat\2021-final-project"/>
+			<item value="C:\Users\rafee\Desktop\pipesatrafeeq\Pipesat"/>
+		</list>
+	</section>
+	<section name="SaveAsDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="619"/>
+		<item key="DIALOG_Y_ORIGIN" value="89"/>
+		<item key="DIALOG_WIDTH" value="700"/>
+		<item key="DIALOG_HEIGHT" value="645"/>
+		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+	</section>
+</section>

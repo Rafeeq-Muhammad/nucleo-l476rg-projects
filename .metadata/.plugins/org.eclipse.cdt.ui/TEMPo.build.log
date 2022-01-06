@@ -1,0 +1,112 @@
+16:42:17 **** Incremental Build of configuration Debug for project TEMPo ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/Peripherals/Peripherals.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/Peripherals/Peripherals.d" -MT"Core/Src/Peripherals/Peripherals.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Peripherals/Peripherals.o"
+arm-none-eabi-gcc "../Core/Src/7seg-functions/7seg-functions.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/7seg-functions/7seg-functions.d" -MT"Core/Src/7seg-functions/7seg-functions.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/7seg-functions/7seg-functions.o"
+../Core/Src/Peripherals/Peripherals.c:14:1: error: unknown type name 'SPI_HandleTypeDef'; did you mean 'I2C_HandleTypeDef'?
+   14 | SPI_HandleTypeDef hspi1;
+      | ^~~~~~~~~~~~~~~~~
+      | I2C_HandleTypeDef
+../Core/Src/Peripherals/Peripherals.c: In function 'MX_SPI1_Init':
+../Core/Src/Peripherals/Peripherals.c:144:8: error: request for member 'Instance' in something not a structure or union
+  144 |   hspi1.Instance = SPI1;
+      |        ^
+../Core/Src/Peripherals/Peripherals.c:145:8: error: request for member 'Init' in something not a structure or union
+  145 |   hspi1.Init.Mode = SPI_MODE_MASTER;
+      |        ^
+../Core/Src/7seg-functions/7seg-functions.c:19:1: error: unknown type name 'SPI_HandleTypeDef'; did you mean 'I2C_HandleTypeDef'?
+   19 | SPI_HandleTypeDef hspi1;
+      | ^~~~~~~~~~~~~~~~~
+      | I2C_HandleTypeDef
+../Core/Src/Peripherals/Peripherals.c:145:21: error: 'SPI_MODE_MASTER' undeclared (first use in this function); did you mean 'HAL_I2C_MODE_MASTER'?
+  145 |   hspi1.Init.Mode = SPI_MODE_MASTER;
+      |                     ^~~~~~~~~~~~~~~
+      |                     HAL_I2C_MODE_MASTER
+../Core/Src/Peripherals/Peripherals.c:145:21: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/Peripherals/Peripherals.c:146:8: error: request for member 'Init' in something not a structure or union
+  146 |   hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+      |        ^
+../Core/Src/7seg-functions/7seg-functions.c: In function 'moveCursor':
+../Core/Src/7seg-functions/7seg-functions.c:42:2: warning: implicit declaration of function 'HAL_SPI_Transmit'; did you mean 'SPI_Transmit'? [-Wimplicit-function-declaration]
+   42 |  HAL_SPI_Transmit(&hspi1, digit_cmd_array[position], sizeof(digit_cmd_array[position]), timeout);
+      |  ^~~~~~~~~~~~~~~~
+      |  SPI_Transmit
+make: *** [Core/Src/7seg-functions/subdir.mk:19: Core/Src/7seg-functions/7seg-functions.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/Peripherals/Peripherals.c:146:26: error: 'SPI_DIRECTION_2LINES' undeclared (first use in this function)
+  146 |   hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+      |                          ^~~~~~~~~~~~~~~~~~~~
+../Core/Src/Peripherals/Peripherals.c:147:8: error: request for member 'Init' in something not a structure or union
+  147 |   hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+      |        ^
+../Core/Src/Peripherals/Peripherals.c:147:25: error: 'SPI_DATASIZE_8BIT' undeclared (first use in this function)
+  147 |   hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+      |                         ^~~~~~~~~~~~~~~~~
+../Core/Src/Peripherals/Peripherals.c:148:8: error: request for member 'Init' in something not a structure or union
+  148 |   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+      |        ^
+../Core/Src/Peripherals/Peripherals.c:148:28: error: 'SPI_POLARITY_LOW' undeclared (first use in this function)
+  148 |   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+      |                            ^~~~~~~~~~~~~~~~
+../Core/Src/Peripherals/Peripherals.c:149:8: error: request for member 'Init' in something not a structure or union
+  149 |   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+      |        ^
+../Core/Src/Peripherals/Peripherals.c:149:25: error: 'SPI_PHASE_1EDGE' undeclared (first use in this function)
+  149 |   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+      |                         ^~~~~~~~~~~~~~~
+../Core/Src/Peripherals/Peripherals.c:150:8: error: request for member 'Init' in something not a structure or union
+  150 |   hspi1.Init.NSS = SPI_NSS_SOFT;
+      |        ^
+../Core/Src/Peripherals/Peripherals.c:150:20: error: 'SPI_NSS_SOFT' undeclared (first use in this function)
+  150 |   hspi1.Init.NSS = SPI_NSS_SOFT;
+      |                    ^~~~~~~~~~~~
+../Core/Src/Peripherals/Peripherals.c:151:8: error: request for member 'Init' in something not a structure or union
+  151 |   hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
+      |        ^
+../Core/Src/Peripherals/Peripherals.c:151:34: error: 'SPI_BAUDRATEPRESCALER_256' undeclared (first use in this function)
+  151 |   hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
+      |                                  ^~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/Peripherals/Peripherals.c:152:8: error: request for member 'Init' in something not a structure or union
+  152 |   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+      |        ^
+../Core/Src/Peripherals/Peripherals.c:152:25: error: 'SPI_FIRSTBIT_MSB' undeclared (first use in this function)
+  152 |   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+      |                         ^~~~~~~~~~~~~~~~
+../Core/Src/Peripherals/Peripherals.c:153:8: error: request for member 'Init' in something not a structure or union
+  153 |   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+      |        ^
+../Core/Src/Peripherals/Peripherals.c:153:23: error: 'SPI_TIMODE_DISABLE' undeclared (first use in this function); did you mean 'SPI_TIMODE_DISABLED'?
+  153 |   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+      |                       ^~~~~~~~~~~~~~~~~~
+      |                       SPI_TIMODE_DISABLED
+../Core/Src/Peripherals/Peripherals.c:154:8: error: request for member 'Init' in something not a structure or union
+  154 |   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+      |        ^
+../Core/Src/Peripherals/Peripherals.c:154:31: error: 'SPI_CRCCALCULATION_DISABLE' undeclared (first use in this function); did you mean 'SPI_CRCCALCULATION_DISABLED'?
+  154 |   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+      |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                               SPI_CRCCALCULATION_DISABLED
+../Core/Src/Peripherals/Peripherals.c:155:8: error: request for member 'Init' in something not a structure or union
+  155 |   hspi1.Init.CRCPolynomial = 7;
+      |        ^
+../Core/Src/Peripherals/Peripherals.c:156:8: error: request for member 'Init' in something not a structure or union
+  156 |   hspi1.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+      |        ^
+../Core/Src/Peripherals/Peripherals.c:156:26: error: 'SPI_CRC_LENGTH_DATASIZE' undeclared (first use in this function)
+  156 |   hspi1.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+      |                          ^~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/Peripherals/Peripherals.c:157:8: error: request for member 'Init' in something not a structure or union
+  157 |   hspi1.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+      |        ^
+../Core/Src/Peripherals/Peripherals.c:157:25: error: 'SPI_NSS_PULSE_ENABLE' undeclared (first use in this function); did you mean 'SPI_NSS_PULSE_ENABLED'?
+  157 |   hspi1.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+      |                         ^~~~~~~~~~~~~~~~~~~~
+      |                         SPI_NSS_PULSE_ENABLED
+../Core/Src/Peripherals/Peripherals.c:158:7: warning: implicit declaration of function 'HAL_SPI_Init'; did you mean 'HAL_GPIO_Init'? [-Wimplicit-function-declaration]
+  158 |   if (HAL_SPI_Init(&hspi1) != HAL_OK)
+      |       ^~~~~~~~~~~~
+      |       HAL_GPIO_Init
+make: *** [Core/Src/Peripherals/subdir.mk:19: Core/Src/Peripherals/Peripherals.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+
+16:42:17 Build Failed. 31 errors, 2 warnings. (took 646ms)
+

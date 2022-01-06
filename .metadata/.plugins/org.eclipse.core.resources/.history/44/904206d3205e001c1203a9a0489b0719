@@ -1,0 +1,393 @@
+/* USER CODE BEGIN Header */
+
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+#include "peripherals/peripherals.h"
+#include <stdio.h>
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+//SPI_HandleTypeDef hspi1;
+//UART_HandleTypeDef huart2;
+
+/* USER CODE BEGIN PV */
+
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+//void SystemClock_Config(void);
+//static void MX_GPIO_Init(void);
+//static void MX_USART2_UART_Init(void);
+//static void MX_SPI1_Init(void);
+/* USER CODE BEGIN PFP */
+
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+/* Here we create a variable to store the value that we want to send.
+ * Anytime we call the data_buff_n we can access the contents and send it through the SPI communication.
+ * These are the data buffers that will hold the information we wish to transmit and update the screen with.
+ */
+
+//DATA BUFFS FOR 7SEG DISPLAY
+//uint8_t data_buff_1 = 'T';
+//uint8_t data_buff_2 = 'E';
+//uint8_t data_buff_3 = 'S';
+//uint8_t data_buff_4 = 'T';
+uint8_t data_buff_1 = 1;
+uint8_t data_buff_2 = 2;
+uint8_t data_buff_3 = 3;
+uint8_t data_buff_4 = 4;
+
+// Here are the "commands" that we will be passing to interact with different features of the display
+	    // Please read Sparkfun data sheet and 7 segment display documentation for more explanations of what is going on.
+	    uint8_t colon_cmd[2] = {0x77, 0x10}; // colon enable
+	    //uint8_t reset_display[1] = {0x81}; // reset display
+	    uint8_t brightness_val = 100; //0-254
+	    uint8_t clear_display_cmd[1] = {0x76}; // clear display, unclear whether this commands clears the whole screen or just one integer
+
+	    uint8_t digit1_cmd[2] = {0x79, 0x00}; // brings cursor to first digit place
+	    uint8_t digit2_cmd[2] = {0x79, 0x01}; // brings cursor to second digit place
+	    uint8_t digit3_cmd[2] = {0x79, 0x02}; // brings cursor to third digit place
+	    uint8_t digit4_cmd[2] = {0x79, 0x03}; // brings cursor back to fourth digit place
+	    //	  uint8_t digit_cmd_array[4][2] = { {*digit1_cmd} , {*digit2_cmd} , {*digit3_cmd}, {*digit4_cmd} };
+		  uint8_t digit_cmd_array[4][2] = { {0x79, 0x00} , {0x79, 0x01} , {0x79, 0x02}, {0x79, 0x03} };
+
+
+/* USER CODE END 0 */
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
+int main(void)
+{
+  /* USER CODE BEGIN 1 */
+
+	  uint8_t data_buff_array[4] = {data_buff_1, data_buff_2, data_buff_3, data_buff_4};
+
+
+	  uint8_t brightness_array[2] ={0x7A, brightness_val}; // brightness ranges from 0 to 254
+
+	    // General variables
+	    int timeout = 500;
+
+
+
+
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_USART2_UART_Init();
+  MX_SPI1_Init();
+  /* USER CODE BEGIN 2 */
+
+  	  //-Tasks START-//
+  /*
+   * The way transmission works is I reset the signal to the gpiob making it 0,
+   * then I load the information, then i set the signal again to display the signal.
+   * The problem is that everytime I set the signal, the cursor moves automatically.
+   *
+   * SO I HAVE ONE OPTIONS.
+   *
+   * ONE: Everytime right befor I transmit I manually send the cursor back to the
+   * cursor I'm on with the 3 lines I have (DO THIS).
+  */
+  	  //-Tasks END-//
+
+
+
+//   CS pin should default high
+ //  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+
+   // CS pin should default low
+      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+
+      //Clears the display
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+	  HAL_SPI_Transmit(&hspi1, clear_display_cmd, 1, timeout);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+
+//	  HAL_Delay(2000); //wait
+
+
+
+      //set brightness to high
+      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+      HAL_SPI_Transmit(&hspi1, brightness_array, 2, timeout);
+      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+
+
+		//move cursor to first position 0x00
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+		HAL_SPI_Transmit(&hspi1, digit1_cmd, 2, timeout);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+		//move cursor to second position 0x01
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+		HAL_SPI_Transmit(&hspi1, digit2_cmd, 2, timeout);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+		//move cursor third position 0x02
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+		HAL_SPI_Transmit(&hspi1, digit3_cmd, 2, timeout);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+		//move cursor to fourth position 0x03
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+		HAL_SPI_Transmit(&hspi1, digit4_cmd, 2, timeout);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+
+		//Clears the display
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+		  HAL_SPI_Transmit(&hspi1, clear_display_cmd, 1, timeout);
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+
+
+		HAL_Delay(3000);
+
+
+
+
+
+
+
+
+
+
+      //Writes TEST on display
+
+//      //move cursor to first position 0x00
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//      HAL_SPI_Transmit(&hspi1, digit1_cmd, 2, timeout);
+//      //HAL_SPI_Transmit(&hspi1, digit_cmd_array[0], 2, timeout);
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//      //write to display "T"
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//      HAL_SPI_Transmit(&hspi1, &data_buff_1, 1, timeout);
+//      //HAL_SPI_Transmit(&hspi1, &data_buff_array[0], 1, timeout);
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//
+//      //move cursor to second position 0x01
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//      HAL_SPI_Transmit(&hspi1, digit2_cmd, 2, timeout);
+//      //HAL_SPI_Transmit(&hspi1, digit_cmd_array[1], 2, timeout);
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//      //write to display "E"
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//      HAL_SPI_Transmit(&hspi1, &data_buff_2, 1, timeout);
+//      //HAL_SPI_Transmit(&hspi1, &data_buff_array[1], 1, timeout);
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//
+//      //move cursor third position 0x02
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//      HAL_SPI_Transmit(&hspi1, digit3_cmd, 2, timeout);
+//      //HAL_SPI_Transmit(&hspi1, digit_cmd_array[2], 2, timeout);
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//      //write to display "S"
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//      HAL_SPI_Transmit(&hspi1, &data_buff_3, 1, timeout);
+//      //HAL_SPI_Transmit(&hspi1, &data_buff_array[2], 1, timeout);
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//
+//      //move cursor to fourth position 0x03
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//      HAL_SPI_Transmit(&hspi1, digit4_cmd, 2, timeout);
+//      //HAL_SPI_Transmit(&hspi1, digit_cmd_array[3], 2, timeout);
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//      //write to display "T"
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//      HAL_SPI_Transmit(&hspi1, &data_buff_4, 1, timeout);
+//      //HAL_SPI_Transmit(&hspi1, &data_buff_array[3], 1, timeout);
+//      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+
+
+
+
+
+
+
+
+
+
+//	      //move cursor to first position 0x00
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//	      //HAL_SPI_Transmit(&hspi1, digit1_cmd, 2, timeout);
+//	      HAL_SPI_Transmit(&hspi1, digit_cmd_array[0], 2, timeout);
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//	      //write to display "T"
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//	      //HAL_SPI_Transmit(&hspi1, &data_buff_1, 1, timeout);
+//	      HAL_SPI_Transmit(&hspi1, &data_buff_array[0], 1, timeout);
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//
+//	      //move cursor to second position 0x01
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//	      //HAL_SPI_Transmit(&hspi1, digit2_cmd, 2, timeout);
+//	      HAL_SPI_Transmit(&hspi1, digit_cmd_array[1], 2, timeout);
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//	      //write to display "E"
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//	      //HAL_SPI_Transmit(&hspi1, &data_buff_2, 1, timeout);
+//	      HAL_SPI_Transmit(&hspi1, &data_buff_array[1], 1, timeout);
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//
+//	      //move cursor third position 0x02
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//	      //HAL_SPI_Transmit(&hspi1, digit3_cmd, 2, timeout);
+//	      HAL_SPI_Transmit(&hspi1, digit_cmd_array[2], 2, timeout);
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//	      //write to display "S"
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//	      //HAL_SPI_Transmit(&hspi1, &data_buff_3, 1, timeout);
+//	      HAL_SPI_Transmit(&hspi1, &data_buff_array[2], 1, timeout);
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//
+//	      //move cursor to fourth position 0x03
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//	      //HAL_SPI_Transmit(&hspi1, digit4_cmd, 2, timeout);
+//	      HAL_SPI_Transmit(&hspi1, digit_cmd_array[3], 2, timeout);
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//	      //write to display "T"
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//	      //HAL_SPI_Transmit(&hspi1, &data_buff_4, 1, timeout);
+//	      HAL_SPI_Transmit(&hspi1, &data_buff_array[3], 1, timeout);
+//	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+
+
+
+	      //move cursor to fourth position 0x03
+	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+	      //HAL_SPI_Transmit(&hspi1, digit1_cmd, 2, timeout);
+	      HAL_SPI_Transmit(&hspi1, digit_cmd_array[1], 2, timeout);
+	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+	      //write to display "T"
+	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+	      //HAL_SPI_Transmit(&hspi1, &data_buff_4, 1, timeout);
+	      HAL_SPI_Transmit(&hspi1, &data_buff_array[2], 1, timeout);
+	      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//      for (int i = 0; i < 4; i++) {
+//		//move cursor to first position 0x00
+//		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//		HAL_SPI_Transmit(&hspi1, digit_cmd_array[i], 2, timeout);
+//		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//
+//		//write to display "T"
+//		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//		HAL_SPI_Transmit(&hspi1, &data_buff_array[i], 1, timeout);
+//		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//      }
+
+      //HAL_Delay(5000); //wait
+
+
+
+
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+
+//	for (int i = 0; i < 1; i = i + 33){
+//		data_buff_1 = (i/1000) % 10;
+//		data_buff_2 = (i/100) % 10;
+//		data_buff_3 = (i/10) % 10;
+//		data_buff_4 = (i/1) % 10;
+//
+//		//move cursor to first position 0x00
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//		      HAL_SPI_Transmit(&hspi1, digit1_cmd, 2, timeout);
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//		      //write to display "T"
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//		      HAL_SPI_Transmit(&hspi1, &data_buff_1, 1, timeout);
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//		      //move cursor to second position 0x01
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//		      HAL_SPI_Transmit(&hspi1, digit2_cmd, 2, timeout);
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//		      //write to display "E"
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//		      HAL_SPI_Transmit(&hspi1, &data_buff_2, 1, timeout);
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//		      //move cursor third position 0x02
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//		      HAL_SPI_Transmit(&hspi1, digit3_cmd, 2, timeout);
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//		      //write to display "S"
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//		      HAL_SPI_Transmit(&hspi1, &data_buff_3, 1, timeout);
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//		      //move cursor to fourth position 0x03
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//		      HAL_SPI_Transmit(&hspi1, digit4_cmd, 2, timeout);
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//		      //write to display "T"
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//		      HAL_SPI_Transmit(&hspi1, &data_buff_4, 1, timeout);
+//		      HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//
+//		      HAL_Delay(50);
+//	}
+
+
+
+  }
+  /* USER CODE END 3 */
+}
+
+// /* USER CODE BEGIN 4 */
+
+// /* USER CODE END 4 */

@@ -1,0 +1,10 @@
+16:08:31 **** Incremental Build of configuration Debug for project Final_Project_Ground ****
+make -j8 all 
+arm-none-eabi-size   Final_Project_Ground.elf 
+   text	   data	    bss	    dec	    hex	filename
+  31228	    120	   3120	  34468	   86a4	Final_Project_Ground.elf
+Finished building: default.size.stdout
+ 
+
+16:08:31 Build Finished. 0 errors, 0 warnings. (took 208ms)
+

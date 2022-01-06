@@ -1,0 +1,10 @@
+18:00:44 **** Incremental Build of configuration Debug for project nucleo-l476rg-uart_parsing_commands ****
+make -j8 all 
+arm-none-eabi-size   nucleo-l476rg-uart_parsing_commands.elf 
+   text	   data	    bss	    dec	    hex	filename
+  17808	    120	   1944	  19872	   4da0	nucleo-l476rg-uart_parsing_commands.elf
+Finished building: default.size.stdout
+ 
+
+18:00:44 Build Finished. 0 errors, 0 warnings. (took 231ms)
+

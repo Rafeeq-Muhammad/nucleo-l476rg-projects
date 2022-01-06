@@ -1,0 +1,47 @@
+16:32:58 **** Incremental Build of configuration Debug for project GroundNode ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/gpio.d" -MT"Core/Src/gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/gpio.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/gpio.c: In function 'MX_GPIO_Init':
+../Core/Src/gpio.c:53:21: error: 'LD2_GPIO_Port' undeclared (first use in this function); did you mean 'SWO_GPIO_Port'?
+   53 |   HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+      |                     ^~~~~~~~~~~~~
+      |                     SWO_GPIO_Port
+../Core/Src/gpio.c:53:21: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/gpio.c:53:36: error: 'LD2_Pin' undeclared (first use in this function)
+   53 |   HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+      |                                    ^~~~~~~
+In file included from ../Core/Src/main.c:28:
+../Core/Src/LoRa.h:1:1: warning: multi-line comment [-Wcomment]
+    1 | // -------------------------------------------------- \\
+      | ^
+../Core/Src/main.c:35:13: error: static declaration of 'MX_GPIO_Init' follows non-static declaration
+   35 | static void MX_GPIO_Init(void);
+      |             ^~~~~~~~~~~~
+In file included from ../Core/Src/main.c:22:
+../Core/Inc/gpio.h:38:6: note: previous declaration of 'MX_GPIO_Init' was here
+   38 | void MX_GPIO_Init(void);
+      |      ^~~~~~~~~~~~
+../Core/Src/main.c:36:13: error: static declaration of 'MX_USART2_UART_Init' follows non-static declaration
+   36 | static void MX_USART2_UART_Init(void);
+      |             ^~~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/gpio.o] Error 1
+make: *** Waiting for unfinished jobs....
+In file included from ../Core/Src/main.c:21:
+../Core/Inc/usart.h:40:6: note: previous declaration of 'MX_USART2_UART_Init' was here
+   40 | void MX_USART2_UART_Init(void);
+      |      ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:35:13: warning: 'MX_GPIO_Init' used but never defined
+   35 | static void MX_GPIO_Init(void);
+      |             ^~~~~~~~~~~~
+../Core/Src/main.c:36:13: warning: 'MX_USART2_UART_Init' declared 'static' but never defined [-Wunused-function]
+   36 | static void MX_USART2_UART_Init(void);
+      |             ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:37:13: warning: 'MX_SPI1_Init' declared 'static' but never defined [-Wunused-function]
+   37 | static void MX_SPI1_Init(void);
+      |             ^~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+
+16:32:58 Build Failed. 7 errors, 4 warnings. (took 455ms)
+

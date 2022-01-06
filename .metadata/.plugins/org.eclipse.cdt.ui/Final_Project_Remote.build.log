@@ -1,0 +1,10 @@
+16:36:09 **** Incremental Build of configuration Debug for project Final_Project_Remote ****
+make -j8 all 
+arm-none-eabi-size   Final_Project_Remote.elf 
+   text	   data	    bss	    dec	    hex	filename
+  22924	    120	   2392	  25436	   635c	Final_Project_Remote.elf
+Finished building: default.size.stdout
+ 
+
+16:36:10 Build Finished. 0 errors, 0 warnings. (took 238ms)
+

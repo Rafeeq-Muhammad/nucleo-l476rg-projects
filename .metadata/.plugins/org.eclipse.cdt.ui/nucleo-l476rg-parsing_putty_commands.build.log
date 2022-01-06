@@ -1,0 +1,10 @@
+10:57:16 **** Incremental Build of configuration Debug for project nucleo-l476rg-parsing_putty_commands ****
+make -j8 all 
+arm-none-eabi-size   nucleo-l476rg-parsing_putty_commands.elf 
+   text	   data	    bss	    dec	    hex	filename
+  21908	    120	   1944	  23972	   5da4	nucleo-l476rg-parsing_putty_commands.elf
+Finished building: default.size.stdout
+ 
+
+10:57:16 Build Finished. 0 errors, 0 warnings. (took 330ms)
+

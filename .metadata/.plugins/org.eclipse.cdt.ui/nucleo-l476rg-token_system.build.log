@@ -1,0 +1,10 @@
+21:42:57 **** Incremental Build of configuration Debug for project nucleo-l476rg-token_system ****
+make -j8 all 
+arm-none-eabi-size   nucleo-l476rg-token_system.elf 
+   text	   data	    bss	    dec	    hex	filename
+  21992	    120	   1872	  23984	   5db0	nucleo-l476rg-token_system.elf
+Finished building: default.size.stdout
+ 
+
+21:42:57 Build Finished. 0 errors, 0 warnings. (took 156ms)
+

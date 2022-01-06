@@ -1,0 +1,10 @@
+17:32:38 **** Build of configuration Debug for project nucleo-l476rg-buffer-testing ****
+make -j8 all 
+arm-none-eabi-size   nucleo-l476rg-buffer-testing.elf 
+   text	   data	    bss	    dec	    hex	filename
+  12100	     20	   1700	  13820	   35fc	nucleo-l476rg-buffer-testing.elf
+Finished building: default.size.stdout
+ 
+
+17:32:38 Build Finished. 0 errors, 0 warnings. (took 162ms)
+
