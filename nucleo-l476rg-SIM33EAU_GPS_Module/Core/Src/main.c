@@ -138,6 +138,9 @@ int main(void) {
 
 	HAL_UART_Receive_DMA(&huart1, buff, 255);
 
+	//My addition. Change settings for all sentences.
+
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
