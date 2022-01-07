@@ -139,6 +139,8 @@ int main(void) {
 	HAL_UART_Receive_DMA(&huart1, buff, 255);
 
 	//My addition. Change settings for all sentences.
+	char command[100] = "$PMTK314,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0*29\r\n"; //all sentences
+	HAL_UART_Transmit(&huart1, (uint8_t*) command, strlen(command), 200);//show the sentences chosen
 
 
 	/* USER CODE END 2 */
