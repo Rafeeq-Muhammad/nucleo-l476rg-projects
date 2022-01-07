@@ -141,7 +141,8 @@ int main(void) {
 	HAL_UART_Receive_DMA(&huart1, buff, 255);
 
 
-	//Checksume is every character between $ and *, including the commas. Google checksum calculator, copy paste.
+	//WHAT IS CHECKSUM:
+	//Checksum is every character between $ and *, including the commas. Google checksum calculator, copy paste.
 	//Restore the gps to default settings.
 	//$PMTK314,-1*04<CR><LF>
 //	char command[16] = "$PMTK314,-1*04\r\n";
@@ -149,12 +150,9 @@ int main(void) {
 
 
 	//char command[100] = "$PMTK314,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n"; // GPGLL ONLY. 29 checksum correct.
-
 	//char command[100] = "$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28\r\n"; //Only sentence 2 and 4. 28 checksum correct.
-
-
-	char command[100] = "$PMTK314,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0*29\r\n";
-	HAL_UART_Transmit(&huart1, (uint8_t*) command, strlen(command), 200);
+	char command[100] = "$PMTK314,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0*29\r\n"; //all sentences
+	HAL_UART_Transmit(&huart1, (uint8_t*) command, strlen(command), 200);//show the sentences chosen
 
 
 
@@ -193,8 +191,8 @@ int main(void) {
 
 			sprintf(buffStr, "%s", buff);
 
-			// if we want to display the incoming raw data
-			//HAL_UART_Transmit(&huart2, buff, 255, 70);
+			//***if we want to display the incoming raw data
+			HAL_UART_Transmit(&huart2, buff, 255, 70);
 
 			// splitting the buffStr by the "\n" delimiter with the strsep() C function
 			// see http://www.manpagez.com/man/3/strsep/
@@ -229,7 +227,7 @@ int main(void) {
 					// the data in the the NMEA sentence
 					if (strstr(smNmbr, hex) != NULL) {
 
-						//if we want display good $GNGLL NMEA sentences
+						//***if we want display good $GNGLL NMEA sentences
 						//HAL_UART_Transmit(&huart2, nmeaSnt, 50, 70);
 						//HAL_UART_Transmit(&huart2, (uint8_t*) "\n", 1, 200);
 
