@@ -139,8 +139,9 @@ int main(void) {
 	HAL_UART_Receive_DMA(&huart1, buff, 255);
 
 	//My addition. Change settings for all sentences.
+	//char command[100] = "$PMTK314,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n"; // GNGLL ONLY. 29 checksum correct.
 	char command[100] = "$PMTK314,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0*29\r\n"; //all sentences
-	HAL_UART_Transmit(&huart1, (uint8_t*) command, strlen(command), 200);//show the sentences chosen
+	HAL_UART_Transmit(&huart1, (uint8_t*) command, strlen(command), 200);//this command is sent to the gps.
 
 
 	/* USER CODE END 2 */
@@ -176,7 +177,7 @@ int main(void) {
 			sprintf(buffStr, "%s", buff);
 
 			// if we want to display the incoming raw data
-			HAL_UART_Transmit(&huart2, buff, 255, 70);
+			//HAL_UART_Transmit(&huart2, buff, 255, 70);
 
 			// splitting the buffStr by the "\n" delimiter with the strsep() C function
 			// see http://www.manpagez.com/man/3/strsep/
@@ -274,22 +275,23 @@ int main(void) {
 						strcat(strUTC, sS);
 						strUTC[8] = '\0';
 
+
 						HAL_UART_Transmit(&huart2, (uint8_t*) hemNS, 1, 200);
 						HAL_UART_Transmit(&huart2, (uint8_t*) " ", 1, 200);
 						HAL_UART_Transmit(&huart2, (uint8_t*) latDg, 2, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "\241", 1, 200);
+						HAL_UART_Transmit(&huart2, (uint8_t*) "°", 2, 200);
 						HAL_UART_Transmit(&huart2, (uint8_t*) latMS, 7, 200);
 						HAL_UART_Transmit(&huart2, (uint8_t*) "\', ", 3, 200);
 
 						HAL_UART_Transmit(&huart2, (uint8_t*) hemEW, 1, 200);
 						HAL_UART_Transmit(&huart2, (uint8_t*) " ", 1, 200);
 						HAL_UART_Transmit(&huart2, (uint8_t*) lonDg, 3, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "\241", 1, 200);
+						HAL_UART_Transmit(&huart2, (uint8_t*) "°", 2, 200);
 						HAL_UART_Transmit(&huart2, (uint8_t*) strLonMS, strlen(strLonMS), 200);
 						HAL_UART_Transmit(&huart2, (uint8_t*) "\', UTC: ", 8, 200);
 
 						HAL_UART_Transmit(&huart2, (uint8_t*) strUTC, 8, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "\n", 1, 200);
+						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
 
 					} // end of of the checksum data verification
 
