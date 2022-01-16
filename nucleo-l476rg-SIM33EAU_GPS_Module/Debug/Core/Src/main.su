@@ -1,9 +1,9 @@
 main.c:19:6:HAL_UART_RxCpltCallback	16	static
 main.c:27:5:nmea0183_checksum	24	static
-main.c:79:5:main	856	static
-main.c:432:6:SystemClock_Config	96	static
-main.c:480:13:MX_USART1_UART_Init	8	static
-main.c:515:13:MX_USART2_UART_Init	8	static
-main.c:548:13:MX_DMA_Init	16	static
-main.c:566:13:MX_GPIO_Init	48	static
-main.c:602:6:Error_Handler	4	static,ignoring_inline_asm
+main.c:79:5:main	848	static
+main.c:478:6:SystemClock_Config	96	static
+main.c:526:13:MX_USART1_UART_Init	8	static
+main.c:561:13:MX_USART2_UART_Init	8	static
+main.c:594:13:MX_DMA_Init	16	static
+main.c:612:13:MX_GPIO_Init	48	static
+main.c:648:6:Error_Handler	4	static,ignoring_inline_asm

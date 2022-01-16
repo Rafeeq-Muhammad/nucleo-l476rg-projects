@@ -107,8 +107,8 @@ int main(void) {
 
 	uint8_t buff[255];
 	char buffStr[255];
-	//uint8_t buff[80];
-	//char buffStr[80]; //GNGLL sentences are size 50
+	//uint8_t buff[350];
+	//char buffStr[350]; //testing will a buffer buffer
 	char nmeaSnt[80];
 
 	char *rawSum;
@@ -129,6 +129,7 @@ int main(void) {
 	char lonDg[3];
 	char lonMS[7];
 	char *hemEW;
+	char strLonMS[7];
 
 	char *utcRaw; // raw UTC time from the NMEA sentence in the hhmmss format
 	char strUTC[8]; // UTC time in the readable hh:mm:ss format
@@ -139,14 +140,17 @@ int main(void) {
 
 	char ground_speed[5];
 
-	char altitude[7];
+	char altitude[4];
 
 	uint8_t cnt = 0;
 
 	HAL_UART_Receive_DMA(&huart1, buff, 255);
 
-	//char command[100] = "$PMTK314,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n"; // GNGLL ONLY. Size:50.
-	char command[100] = "$PMTK314,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0*29\r\n"; //all sentences
+	//char command[100] = "$PMTK314,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n"; // GNGLL sentence only. Sentence length: 50;
+	//char command[100] = "$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n"; // GNGGA sentence only. Sentence length: 72;
+	//char command[100] = "$PMTK314,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n"; // GNVTG sentence only. Sentence length: 33;
+	//char command[100] = "$PMTK314,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0*29\r\n"; //all sentences
+	char command[100] = "$PMTK314,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0*28\r\n"; //GLL, VTG, and GGA sentences only
 	HAL_UART_Transmit(&huart1, (uint8_t*) command, strlen(command), 200);//this command is sent to the gps.
 
 
@@ -177,6 +181,11 @@ int main(void) {
 			  or \n Line feed, end delimiter
 
 			 */
+
+			/*
+			Each full buffer may contain multiple instances of the same sentence.
+			I don't want to display the data out of order, 
+			*/
 
 			memset(buffStr, 0, 255);
 
@@ -261,7 +270,7 @@ int main(void) {
 
 						memcpy(lonMS, &lonRaw[3], 7);
 						lonMS[7] = '\0';
-						char strLonMS[7];
+						//char strLonMS[7];
 						sprintf(strLonMS, "%s", lonMS);
 
 						//converting the UTC time in the hh:mm:ss format
@@ -282,26 +291,26 @@ int main(void) {
 						strUTC[8] = '\0';
 
 
-						HAL_UART_Transmit(&huart2, (uint8_t*) "Coordinates/Timestamp: ", 23, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "Coordinates/Timestamp: ", 23, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
 
-						HAL_UART_Transmit(&huart2, (uint8_t*) hemNS, 1, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) " ", 1, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) latDg, 2, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "°", 2, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) latMS, 7, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "\', ", 3, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) hemNS, 1, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) " ", 1, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) latDg, 2, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "°", 2, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) latMS, 7, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "\', ", 3, 200);
 
-						HAL_UART_Transmit(&huart2, (uint8_t*) hemEW, 1, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) " ", 1, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) lonDg, 3, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "°", 2, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) strLonMS, strlen(strLonMS), 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "\', UTC: ", 8, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) hemEW, 1, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) " ", 1, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) lonDg, 3, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "°", 2, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) strLonMS, strlen(strLonMS), 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "\', UTC: ", 8, 200);
 
-						HAL_UART_Transmit(&huart2, (uint8_t*) strUTC, 8, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) strUTC, 8, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
 
 					} // end of of the checksum data verification
 
@@ -349,11 +358,11 @@ int main(void) {
 
 						}  // end for()
 
-						HAL_UART_Transmit(&huart2, (uint8_t*) "Speed (kph): ", 13, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) ground_speed, 5, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "Speed (kph): ", 13, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) ground_speed, 5, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
 
 					} // end of of the checksum data verification
 
@@ -400,17 +409,54 @@ int main(void) {
 
 						}  // end for()
 
-						HAL_UART_Transmit(&huart2, (uint8_t*) "Altitude (above mean sea level): ", 33, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) altitude, 7, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
-						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "Altitude (above mean sea level): ", 33, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) altitude, 4, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+						// HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
 
 					} // end of of the checksum data verification
 
 				} // end of $GNGAA sentences selection
 
 			} // end of splitting the buffStr by the "\n" delimiter with the strsep() C function
+
+			//Coordinates/Timestamp
+			HAL_UART_Transmit(&huart2, (uint8_t*) "Coordinates/Timestamp: ", 23, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+
+			HAL_UART_Transmit(&huart2, (uint8_t*) hemNS, 1, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) " ", 1, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) latDg, 2, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) "°", 2, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) latMS, 7, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) "\', ", 3, 200);
+
+			HAL_UART_Transmit(&huart2, (uint8_t*) hemEW, 1, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) " ", 1, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) lonDg, 3, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) "°", 2, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) strLonMS, strlen(strLonMS), 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) "\', UTC: ", 8, 200);
+
+			HAL_UART_Transmit(&huart2, (uint8_t*) strUTC, 8, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+
+			//Speed
+			HAL_UART_Transmit(&huart2, (uint8_t*) "Speed (kph): ", 13, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) ground_speed, 5, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+
+			//Altitude
+			HAL_UART_Transmit(&huart2, (uint8_t*) "Altitude (above mean sea level): ", 33, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) altitude, 4, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+			HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+
 
 			flag = 0; // we are ready to get new data from the sensor
 
