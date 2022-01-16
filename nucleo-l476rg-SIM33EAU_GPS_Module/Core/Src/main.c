@@ -104,8 +104,11 @@ int main(void) {
 	MX_USART2_UART_Init();
 	/* USER CODE BEGIN 2 */
 
+
 	uint8_t buff[255];
 	char buffStr[255];
+	//uint8_t buff[80];
+	//char buffStr[80]; //GNGLL sentences are size 50
 	char nmeaSnt[80];
 
 	char *rawSum;
@@ -134,12 +137,15 @@ int main(void) {
 	char mM[2]; // minutes
 	char sS[2]; // seconds
 
+	char ground_speed[5];
+
+	char altitude[7];
+
 	uint8_t cnt = 0;
 
 	HAL_UART_Receive_DMA(&huart1, buff, 255);
 
-	//My addition. Change settings for all sentences.
-	//char command[100] = "$PMTK314,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n"; // GNGLL ONLY. 29 checksum correct.
+	//char command[100] = "$PMTK314,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n"; // GNGLL ONLY. Size:50.
 	char command[100] = "$PMTK314,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0*29\r\n"; //all sentences
 	HAL_UART_Transmit(&huart1, (uint8_t*) command, strlen(command), 200);//this command is sent to the gps.
 
@@ -214,8 +220,8 @@ int main(void) {
 					if (strstr(smNmbr, hex) != NULL) {
 
 						//if we want display good $GNGLL NMEA sentences
-						//HAL_UART_Transmit(&huart2, nmeaSnt, 50, 70);
-						//HAL_UART_Transmit(&huart2, (uint8_t*) "\n", 1, 200);
+						//HAL_UART_Transmit(&huart2, (uint8_t*)nmeaSnt, 50, 70);
+						//HAL_UART_Transmit(&huart2, (uint8_t*) "\n\r", 2, 200);
 
 						cnt = 0;
 
@@ -276,6 +282,9 @@ int main(void) {
 						strUTC[8] = '\0';
 
 
+						HAL_UART_Transmit(&huart2, (uint8_t*) "Coordinates/Timestamp: ", 23, 200);
+						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+
 						HAL_UART_Transmit(&huart2, (uint8_t*) hemNS, 1, 200);
 						HAL_UART_Transmit(&huart2, (uint8_t*) " ", 1, 200);
 						HAL_UART_Transmit(&huart2, (uint8_t*) latDg, 2, 200);
@@ -292,10 +301,114 @@ int main(void) {
 
 						HAL_UART_Transmit(&huart2, (uint8_t*) strUTC, 8, 200);
 						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
 
 					} // end of of the checksum data verification
 
 				} // end of $GNGLL sentences selection
+
+
+				//VTG
+				// selecting only $GNVTG sentences, combined GPS and GLONASS
+				// on my GPS sensor this good NMEA sentence is always 33 characters
+				if ((strstr(nmeaSnt, "$GNVTG") != 0) && strlen(nmeaSnt) > 32 && strstr(nmeaSnt, "*") != 0) {
+
+					rawSum = strstr(nmeaSnt, "*");
+
+					memcpy(smNmbr, &rawSum[1], 2);
+
+					smNmbr[2] = '\0';
+
+					uint8_t intSum = nmea0183_checksum(nmeaSnt);
+
+					char hex[2];
+
+					// "%X" unsigned hexadecimal integer (capital letters)
+					sprintf(hex, "%X", intSum);
+
+					// checksum data verification, if OK, then we can really trust
+					// the data in the the NMEA sentence
+					if (strstr(smNmbr, hex) != NULL) {
+
+						//if we want display good $GNVTG NMEA sentences
+						//HAL_UART_Transmit(&huart2, (uint8_t*)nmeaSnt, 33, 70);
+						//HAL_UART_Transmit(&huart2, (uint8_t*) "\n\r", 2, 200);
+
+						cnt = 0;
+
+						// splitting the good NMEA sentence into the tokens by the comma delimiter
+						for (char *pV = strtok(nmeaSnt, ","); pV != NULL; pV = strtok(NULL, ",")) {
+
+							switch(cnt) {
+								case 6:
+									strcpy(ground_speed, pV);
+									break;
+							}
+
+							cnt++;
+
+						}  // end for()
+
+						HAL_UART_Transmit(&huart2, (uint8_t*) "Speed (kph): ", 13, 200);
+						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+						HAL_UART_Transmit(&huart2, (uint8_t*) ground_speed, 5, 200);
+						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+
+					} // end of of the checksum data verification
+
+				} // end of $GNVTG sentences selection
+
+				//GGA
+				// selecting only $GNGGA sentences, combined GPS and GLONASS
+				// on my GPS sensor this good NMEA sentence is always 33 characters
+				if ((strstr(nmeaSnt, "$GNGGA") != 0) && strlen(nmeaSnt) > 71 && strstr(nmeaSnt, "*") != 0) {
+
+					rawSum = strstr(nmeaSnt, "*");
+
+					memcpy(smNmbr, &rawSum[1], 2);
+
+					smNmbr[2] = '\0';
+
+					uint8_t intSum = nmea0183_checksum(nmeaSnt);
+
+					char hex[2];
+
+					// "%X" unsigned hexadecimal integer (capital letters)
+					sprintf(hex, "%X", intSum);
+
+					// checksum data verification, if OK, then we can really trust
+					// the data in the the NMEA sentence
+					if (strstr(smNmbr, hex) != NULL) {
+
+						//if we want display good $GNGGA NMEA sentences
+						//HAL_UART_Transmit(&huart2, (uint8_t*)nmeaSnt, 72, 70);
+						//HAL_UART_Transmit(&huart2, (uint8_t*) "\n\r", 2, 200);
+
+						cnt = 0;
+
+						// splitting the good NMEA sentence into the tokens by the comma delimiter
+						for (char *pV = strtok(nmeaSnt, ","); pV != NULL; pV = strtok(NULL, ",")) {
+
+							switch(cnt) {
+								case 9:
+									strcpy(altitude, pV);
+									break;
+							}
+
+							cnt++;
+
+						}  // end for()
+
+						HAL_UART_Transmit(&huart2, (uint8_t*) "Altitude (above mean sea level): ", 33, 200);
+						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+						HAL_UART_Transmit(&huart2, (uint8_t*) altitude, 7, 200);
+						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+						HAL_UART_Transmit(&huart2, (uint8_t*) "\r\n", 2, 200);
+
+					} // end of of the checksum data verification
+
+				} // end of $GNGAA sentences selection
 
 			} // end of splitting the buffStr by the "\n" delimiter with the strsep() C function
 
