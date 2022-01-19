@@ -167,7 +167,7 @@ int main(void) {
 	//char command[100] = "$PMTK314,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n"; // GNVTG sentence only. Sentence length: 33;
 	//char command[100] = "$PMTK314,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0*29\r\n"; //all sentences
 	char command[100] = "$PMTK314,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0*28\r\n"; //GLL, VTG, and GGA sentences only
-	HAL_UART_Transmit(&huart1, (uint8_t*) command, strlen(command), 200);//this command is sent to the gpsÎ.
+	HAL_UART_Transmit(&huart1, (uint8_t*) command, strlen(command), 200);//this command is sent to the gps.
 
 
 	/* USER CODE END 2 */
